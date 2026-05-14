@@ -11,3 +11,5 @@ https://github.com/Open-LLM-VTuber/Open-LLM-VTuber
 
 [voice 1](https://github.com/RVC-Boss/GPT-SoVITS)
 
+cosy voice :
+https://github.com/FunAudioLLM/CosyVoice
