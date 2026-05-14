@@ -13,3 +13,4 @@ https://github.com/Open-LLM-VTuber/Open-LLM-VTuber
 
 cosy voice :
 https://github.com/FunAudioLLM/CosyVoice
+api : https://github.com/jianchang512/cosyvoice-api
