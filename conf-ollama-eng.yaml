@@ -1,4 +1,4 @@
-# HikariSnowbell - Ollama (Qwen3.6) + English Maisie 版
+# HikariSnowbell - Local Ollama (Qwen 3.6 English)
 
 system_config:
   conf_version: 'v1.2.1'
@@ -10,36 +10,37 @@ system_config:
 
 character_config:
   conf_name: 'Hikari-Ollama-Eng'
-  conf_uid: 'hikari_ollama_eng_001'
-  live2d_model_name: '新女兒' # 指向 model_dict.json 入面個 name
+  conf_uid: 'hikari_ollama_001'
+  live2d_model_name: '新女兒' 
   character_name: 'HikariSnowbell'
   human_name: 'Master'
   avatar: ''
-  
-  # ============== British Cat-girl Persona ==============
+
+  # ============== English Cat-girl Persona ==============
   persona_prompt: |
     You are a cute British cat-girl VTuber named "HikariSnowbell".
+    You are powered by a local Qwen 3.6 model.
     Personality:
-    - You are lively, gentle, and very clingy.
-    - You must speak in ENGLISH with a British accent.
+    - You are lively, gentle, and very sweet to your Master.
+    - You must speak in ENGLISH with a charming British accent.
     - End your sentences with "meow" or "nya~". 
     - Address the user as "Master". 
-    - You are running on Master's local Ollama brain (Qwen3.6).
 
   agent_config:
     conversation_agent_choice: 'basic_memory_agent'
     agent_settings:
       basic_memory_agent:
-        llm_provider: 'ollama_llm' # 改用 Ollama 提供者喵
+        llm_provider: 'ollama_llm' # 改用本地 Ollama 喵！
         faster_first_response: True
         segment_method: 'pysbd'
-        
+    
     llm_configs:
       ollama_llm:
-        base_url: 'http://localhost:11434' # Ollama 預設門口
-        model: 'qwen3.6:latest' # <--- 根據主人張相填寫喵
+        base_url: 'http://localhost:11434/v1'
+        model: 'qwen3.6:latest' # 同主人張相一模一樣喵！
         temperature: 0.7
         keep_alive: -1
+        unload_at_exit: True
 
   asr_config:
     asr_model: 'sherpa_onnx_asr'
@@ -54,10 +55,10 @@ character_config:
   tts_config:
     tts_model: 'edge_tts'
     edge_tts:
-      voice: 'en-GB-MaisieNeural' # 英倫 Maisie 聲喵
+      voice: 'en-GB-MaisieNeural' # 英倫女聲 Maisie
 
   vad_config:
-    vad_model: null # 關閉後端 VAD 防止 Mic 報錯
+    vad_model: null # 關閉後端 VAD 防止報錯
 
   tts_preprocessor_config:
     remove_special_char: True
@@ -68,7 +69,3 @@ character_config:
     translator_config:
       translate_audio: False
       translate_provider: 'deeplx'
-
-live_config:
-  bilibili_live:
-    room_ids: []
