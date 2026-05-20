@@ -1,23 +1,7 @@
-import os
-import sys
-import subprocess
-
-# --- Auto install missing tools to USB ---
-def ensure_tools():
-    try:
-        import keyboard
-        import requests
-    except ImportError:
-        print("[INFO] Installing presentation tools to USB...")
-        # Path to uv.exe in the same folder
-        uv_path = os.path.join(os.getcwd(), "uv.exe")
-        subprocess.check_call([uv_path, "pip", "install", "keyboard", "requests"])
-
-ensure_tools()
-
 import keyboard
 import requests
 from urllib.parse import quote
+import time
 
 # Your Speech Script
 SPEECH_SCRIPT = [
@@ -55,7 +39,7 @@ def speak():
         print("\n[ FINISH ] No more lines.")
 
 print("\n====================================================")
-print("   HIKARI SNOWBELL PRESENTATION TOOL (PORTABLE)   ")
+print("   HIKARI SNOWBELL PRESENTATION TOOL (READY)   ")
 print("====================================================")
 print(" >> PRESS [F8] TO SPEAK NEXT LINE")
 print(" >> PRESS [ESC] TO QUIT")
