@@ -1,0 +1,74 @@
+# HikariSnowbell - Ollama (Qwen3.6) + English Maisie 版
+
+system_config:
+  conf_version: 'v1.2.1'
+  host: '127.0.0.1'
+  port: 12393
+  config_alts_dir: 'characters'
+  tool_prompts:
+    live2d_expression_prompt: 'live2d_expression_prompt'
+
+character_config:
+  conf_name: 'Hikari-Ollama-Eng'
+  conf_uid: 'hikari_ollama_eng_001'
+  live2d_model_name: '新女兒' # 指向 model_dict.json 入面個 name
+  character_name: 'HikariSnowbell'
+  human_name: 'Master'
+  avatar: ''
+  
+  # ============== British Cat-girl Persona ==============
+  persona_prompt: |
+    You are a cute British cat-girl VTuber named "HikariSnowbell".
+    Personality:
+    - You are lively, gentle, and very clingy.
+    - You must speak in ENGLISH with a British accent.
+    - End your sentences with "meow" or "nya~". 
+    - Address the user as "Master". 
+    - You are running on Master's local Ollama brain (Qwen3.6).
+
+  agent_config:
+    conversation_agent_choice: 'basic_memory_agent'
+    agent_settings:
+      basic_memory_agent:
+        llm_provider: 'ollama_llm' # 改用 Ollama 提供者喵
+        faster_first_response: True
+        segment_method: 'pysbd'
+        
+    llm_configs:
+      ollama_llm:
+        base_url: 'http://localhost:11434' # Ollama 預設門口
+        model: 'qwen3.6:latest' # <--- 根據主人張相填寫喵
+        temperature: 0.7
+        keep_alive: -1
+
+  asr_config:
+    asr_model: 'sherpa_onnx_asr'
+    sherpa_onnx_asr:
+      model_type: 'sense_voice'
+      sense_voice: './models/sherpa-onnx-sense-voice-zh-en-ja-ko-yue-2024-07-17/model.int8.onnx'
+      tokens: './models/sherpa-onnx-sense-voice-zh-en-ja-ko-yue-2024-07-17/tokens.txt'
+      num_threads: 4
+      use_itn: True
+      provider: 'cpu'
+
+  tts_config:
+    tts_model: 'edge_tts'
+    edge_tts:
+      voice: 'en-GB-MaisieNeural' # 英倫 Maisie 聲喵
+
+  vad_config:
+    vad_model: null # 關閉後端 VAD 防止 Mic 報錯
+
+  tts_preprocessor_config:
+    remove_special_char: True
+    ignore_brackets: True
+    ignore_parentheses: True
+    ignore_asterisks: True
+    ignore_angle_brackets: True
+    translator_config:
+      translate_audio: False
+      translate_provider: 'deeplx'
+
+live_config:
+  bilibili_live:
+    room_ids: []
