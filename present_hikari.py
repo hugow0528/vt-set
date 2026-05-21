@@ -1,49 +1,46 @@
 import keyboard
 import requests
+import json
+import os
+import sys
 from urllib.parse import quote
-import time
 
-# Your Speech Script
-SPEECH_SCRIPT = [
-    "Good morning Principal, teachers, and fellow students.",
-    "Today, I would like to talk about the responsible use of Generative AI.",
-    "Generative AI tools, such as chatbots and image generators, can help us write and brainstorm.",
-    "The key message today is simple: Learn with AI. Think for yourself.",
-    "First, Use AI to Support Learning. AI is a learning assistant, not a replacement for your effort.",
-    "Second, Be Honest. Follow instructions and acknowledge AI use. This shows academic honesty.",
-    "Third, Protect Privacy. Never enter personal data or passwords into AI tools.",
-    "Fourth, Check for Accuracy. AI can make mistakes. Always verify output before using it.",
-    "Fifth, Think Critically. Ask yourself: Is this answer reasonable? Is it biased?",
-    "Sixth, Respect Copyright. Avoid plagiarism and respect the work of original creators.",
-    "Seventh, Be Kind and Safe Online. Technology should not be used to hurt others or spread rumors.",
-    "Finally, Write Better Prompts. Clearer directions lead to better answers. But our judgment is necessary.",
-    "To conclude: AI is a tool, not a replacement for your thinking. Use it ethically.",
-    "Students who use AI responsibly will become better thinkers, creators, and problem-solvers.",
-    "So once again, remember: Learn with AI. Think for yourself. Thank you."
-]
+# 自動獲取當前資料夾路徑
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+JSON_PATH = os.path.join(BASE_DIR, "script.json")
+BASE_URL = "http://127.0.0.1:12393/tts"
 
+def load_script():
+    if not os.path.exists(JSON_PATH):
+        print(f"Error: {JSON_PATH} not found!")
+        return []
+    with open(JSON_PATH, 'r', encoding='utf-8') as f:
+        return json.load(f)
+
+script_lines = load_script()
 current_line = 0
 
-def speak():
+def speak_next():
     global current_line
-    if current_line < len(SPEECH_SCRIPT):
-        text = SPEECH_SCRIPT[current_line]
-        print(f"\n[ Hikari Speaking {current_line+1}/{len(SPEECH_SCRIPT)} ]")
-        print(f"Content: {text}")
+    if current_line < len(script_lines):
+        text = script_lines[current_line]
+        print(f"\n[ Hikari Speaking {current_line + 1}/{len(script_lines)} ]")
+        print(f"Text: {text}")
         try:
-            requests.get(f"http://127.0.0.1:12393/tts?text={quote(text)}")
+            requests.get(f"{BASE_URL}?text={quote(text)}")
             current_line += 1
-        except:
-            print("[ERROR] VTuber Backend not ready yet!")
+        except Exception as e:
+            print(f"Connect Error: {e}")
     else:
-        print("\n[ FINISH ] No more lines.")
+        print("\n[ Finish ] End of script.")
 
-print("\n====================================================")
-print("   HIKARI SNOWBELL PRESENTATION TOOL (READY)   ")
 print("====================================================")
-print(" >> PRESS [F8] TO SPEAK NEXT LINE")
-print(" >> PRESS [ESC] TO QUIT")
+print("   HikariSnowbell Portable Presenter (F9 Mode)   ")
+print("====================================================")
+print(f" Loaded {len(script_lines)} lines from script.json")
+print(" [Press F9]   - Speak Next Line")
+print(" [Press ESC]  - Exit Script")
 print("====================================================")
 
-keyboard.add_hotkey('f8', speak)
+keyboard.add_hotkey('f9', speak_next)
 keyboard.wait('esc')
